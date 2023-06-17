@@ -1,10 +1,10 @@
 format long g
 c=2.99792458*10^8;   %Velocity of light for WGS84
-disp('For ionphere model and using TGD :1')
-disp('Without ionphere model and using TGD :0')
+disp('For ionphere model and using TGD :1')    %% ionosphere
+disp('Without ionphere model and using TGD :0') %% ionosphere
 selection=input('Please select the following which path(1 or 0):');
-%% Calculate calculation epoch:
-%calculation eppoch 21780 It's equal 6.03
+%% Calculate calculation epoch:  
+%calculation eppoch 21780 It's equal 6.03 %% eppoch 
 calculation_epoch=(2+1+4+3+1+7+9+6)*660;
 year=2020;
 mounth=4;
@@ -128,9 +128,9 @@ y0=0;
 z0=0;
 %They will fill
 Satpositon={};
-D={};
-L=[];
-A=[];
+D={}; %% D = ?
+L=[];  %% L= ?
+A=[];  %% A = ?
 
 for i=1:length(sat_paramets)
     %Calling related function for calcultions
@@ -145,19 +145,19 @@ end
 %Find unknowns from least square
 X = A\L;
 %X=((A'*A)^-1)*A'*L;
-dx=X(1);
-dy=X(2);
-dz=X(3);
+dx=X(1);   %% dx= ? 
+dy=X(2);   %% dy = ?
+dz=X(3);   %% dz = ?
 cdtrcv=X(4);
 %Start an iteration for find my unknown parameters
 while  abs(dx)>10^-3 && abs(dy)>10^-3 && abs(dz)>10^-3
-    x0=dx+x0;
-    y0=dy+y0;
-    z0=dz+z0;   
+    x0=dx+x0; %% x0= ?
+    y0=dy+y0; %% y0= ?
+    z0=dz+z0; %% z0= ?  
     L=[];
     A=[];      
     for i=1:length(sat_paramets)
-        p0=sqrt((Satpositon{i}(1)-x0)^2+(Satpositon{i}(2)-y0)^2+(Satpositon{i}(3)-z0)^2);  
+        p0=sqrt((Satpositon{i}(1)-x0)^2+(Satpositon{i}(2)-y0)^2+(Satpositon{i}(3)-z0)^2);    %% p0 = ?
         L=[L;[Prn_c1(i,2)-p0-D{i}]];
         A=[A;[(x0-Satpositon{i}(1))/p0 (y0-Satpositon{i}(2))/p0 (z0-Satpositon{i}(3))/p0 1]]  ; 
     end
